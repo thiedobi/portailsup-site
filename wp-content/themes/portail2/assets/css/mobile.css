@@ -225,7 +225,15 @@
 
 	/* ============ 8. BLOG ============ */
 
-	.clarte-bfilter button { min-height: 40px; }
+	/* Thematiques : une seule ligne qui defile au doigt (15/09/2026) */
+	.clarte-bfilter {
+		flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden;
+		-webkit-overflow-scrolling: touch; scrollbar-width: none;
+		margin: 22px -24px 18px; padding: 2px 24px;
+		scroll-snap-type: x proximity;
+	}
+	.clarte-bfilter::-webkit-scrollbar { display: none; }
+	.clarte-bfilter button { flex: 0 0 auto; min-height: 40px; white-space: nowrap; scroll-snap-align: start; }
 	.clarte-bcard__img { height: 150px; }
 	.clarte-bcard__cat { font-size: 11px; }
 	.clarte-bcard__body { padding: 16px 18px 18px; gap: 6px; }
