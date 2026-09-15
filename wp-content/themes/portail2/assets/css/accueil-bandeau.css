@@ -1,0 +1,120 @@
+/*
+ * PortailSup — accueil : bandeau sombre sur photo (intégré le 11/09/2026).
+ * Ordinateur : titre, recherche, suggestions, lien vers le test d'orientation.
+ * Mobile : photo en haut, recherche qui chevauche, lien vers le test (version simplifiée).
+ * Le reste du site garde le fond beige.
+ */
+
+.p2-home { overflow-x: clip; }
+
+/* Supprime l'espace de 24 px ajouté par WordPress entre l'en-tête et le contenu */
+.wp-site-blocks > main.p2-home { margin-block-start: 0; margin-top: 0; }
+
+/* Bandeau pleine largeur : photo + voile vert forêt pour garder un fort contraste */
+.p2-hero {
+	position: relative; isolation: isolate; color: #fff;
+	padding-top: 92px; padding-bottom: 100px;
+}
+.p2-hero::before {
+	content: ""; position: absolute; top: 0; bottom: 0; left: calc(50% - 50vw); width: 100vw; z-index: -1;
+	background:
+		linear-gradient(180deg, rgba(6, 26, 19, .62) 0%, rgba(12, 59, 45, .80) 55%, rgba(12, 59, 45, .92) 100%),
+		url("https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=70") center 55% / cover no-repeat,
+		#0C3B2D;
+}
+.p2-hero::after {
+	content: "Photo d’illustration"; position: absolute; right: 16px; bottom: 12px;
+	font-size: 11px; letter-spacing: .02em; color: rgba(255, 255, 255, .55);
+}
+
+/* Textes */
+.p2-hero .p2-eyebrow { color: #7CDEB4; font-weight: 600; letter-spacing: .2em; }
+.p2-hero h1 { color: #fff; font-weight: 600; letter-spacing: -.025em; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.p2-hero .p2-u::after { background: #7CDEB4; }
+
+/* Recherche : barre blanche nette, bouton vert lisible (contraste 5,3:1) */
+.p2-hero .p2-searchbar { border: none; border-radius: 10px; box-shadow: 0 16px 40px rgba(0, 0, 0, .28); }
+.p2-hero .p2-searchbar .p2-btn { background: #0B7A56; border-radius: 8px; font-weight: 600; }
+.p2-hero .p2-searchbar .p2-btn:hover { background: #095C42; }
+
+/* Version simplifiée (ordinateur et mobile) : sous la recherche, un seul lien vers le test d'orientation */
+.p2-hero .p2-quizlink {
+	display: inline-block; margin-top: 22px; padding: 6px 0; line-height: 1.5;
+	background: none; border: none; border-radius: 0; color: #fff; font-size: 15px; font-weight: 500;
+	-webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.p2-hero .p2-quizlink svg { display: inline-block; vertical-align: -2px; margin: 0 6px 0 0; color: #7CDEB4; }
+.p2-hero .p2-quizlink b { color: #7CDEB4; font-weight: 600; }
+.p2-hero .p2-quizlink::after { content: "→"; margin-left: 6px; transition: margin .15s ease; }
+.p2-hero .p2-quizlink:hover { background: none; text-decoration: underline; text-underline-offset: 4px; }
+.p2-hero .p2-quizlink:hover::after { margin-left: 10px; }
+
+/* Ordinateur : suggestions juste sous la recherche, puis le lien vers le test ; arguments retirés */
+.p2-hero { display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; }
+.p2-hero .p2-eyebrow { order: 1; }
+.p2-hero h1 { order: 2; }
+.p2-hero .p2-searchbar { order: 3; width: 100%; box-sizing: border-box; }
+.p2-hero .p2-sugg { order: 4; margin-top: 18px !important; color: #C9D8D0; }
+.p2-hero .p2-sugg a { color: #fff; border-bottom-color: rgba(255, 255, 255, .45); }
+.p2-hero .p2-sugg a:hover { color: #7CDEB4; border-color: #7CDEB4; }
+.p2-hero .p2-quizlink { order: 5; }
+.p2-hero .p2-trust { display: none !important; }
+
+/* ---------- Déclinaison mobile : photo en haut, carte de recherche qui chevauche, suite sur fond beige ---------- */
+@media (max-width: 719px) {
+	.p2-hero { padding-top: 150px; padding-bottom: 30px; text-align: left; color: var(--p2-ink); }
+
+	/* Photo limitée au haut du bandeau, dégradé sombre en bas pour lire le titre */
+	.p2-hero::before {
+		bottom: auto; height: 318px;
+		background:
+			linear-gradient(180deg, rgba(6, 26, 19, .18) 0%, rgba(6, 26, 19, .50) 42%, rgba(12, 59, 45, .95) 100%),
+			url("https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=70") 58% 40% / cover no-repeat,
+			#0C3B2D;
+		border-radius: 0 0 26px 26px;
+	}
+	.p2-hero::after { top: 12px; right: 14px; bottom: auto; font-size: 10.5px; color: rgba(255, 255, 255, .8); }
+
+	/* Titre posé en bas de la photo */
+	.p2-hero .p2-eyebrow { font-size: 11px; letter-spacing: .16em; }
+	.p2-hero h1 { font-size: 36px; line-height: 1.12; margin-top: 8px; }
+
+	/* Recherche sur une seule ligne : champ + bouton loupe */
+	.p2-hero .p2-searchbar {
+		flex-wrap: nowrap; gap: 8px; margin-top: 22px; padding: 6px 6px 6px 14px;
+		border-radius: 14px; box-shadow: 0 14px 34px rgba(12, 30, 22, .22);
+	}
+	.p2-hero .p2-searchbar > svg { display: none; }
+	.p2-hero .p2-searchbar input { width: auto; flex: 1; min-width: 0; padding: 10px 2px; }
+	.p2-hero .p2-searchbar .p2-btn {
+		flex: none; width: 48px; height: 48px; padding: 0; justify-content: center;
+		font-size: 0; border-radius: 10px;
+		background: #0B7A56 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.8-3.8'/%3E%3C/svg%3E") center / 22px no-repeat;
+	}
+
+	/* Lien vers le test : sur fond beige, en vert foncé */
+	.p2-hero .p2-quizlink { display: block; margin-top: 18px; text-align: left; color: #0A6B4C; }
+	.p2-hero .p2-quizlink svg { color: #0B7A56; }
+	.p2-hero .p2-quizlink b { color: #0A6B4C; }
+	/* Mobile simplifié : pas de suggestions */
+	.p2-hero { align-items: stretch; padding-bottom: 20px; }
+	.p2-hero .p2-sugg { display: none !important; }
+}
+
+
+/* ---------- Suggestions de domaines sous la barre de recherche ---------- */
+.p2-hero { z-index: 2; }
+.p2-hero .p2-searchbar { position: relative; }
+.p2-domsugg { top: calc(100% + 8px); padding: 6px 0; text-align: left; color: var(--p2-ink); }
+.p2-domsugg-t { margin: 6px 16px 4px !important; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--p2-gray-l); }
+.p2-domsugg .p2-domsugg-it { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: none; }
+.p2-domsugg-it .p2-acitem-t { font-size: 15px; font-weight: 500; }
+.p2-domsugg-it mark { background: none; color: #0A6B4C; font-weight: 700; }
+.p2-domsugg-it .p2-acitem-s { font-size: 12.5px; white-space: nowrap; }
+.p2-domsugg-it.is-on, .p2-domsugg-it:hover { background: var(--p2-emer-pale); }
+.p2-domsugg-all {
+	display: block; width: 100%; margin-top: 4px; padding: 13px 16px;
+	border: none; border-top: 1px solid var(--p2-hair); background: none; cursor: pointer;
+	font-family: inherit; font-size: 14px; font-weight: 500; text-align: left; color: #0A6B4C;
+}
+.p2-domsugg-all:hover { background: var(--p2-paper); }

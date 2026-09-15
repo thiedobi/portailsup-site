@@ -1,0 +1,145 @@
+/*
+ * PortailSup — menu mobile (écrans ≤ 719 px)
+ * En-tête : logo à gauche, loupe + menu groupés à droite.
+ * Menu : panneau qui glisse de la droite vers la gauche, sous l'en-tête.
+ * Le menu n'a aucun effet sur ordinateur ; seul l'en-tête figé s'applique à toutes les tailles. Ajouté le 11/09/2026.
+ * Pour annuler : supprimer inc/menu-mobile.php ou retirer sa ligne dans functions.php.
+ */
+
+/* ---------- En-tête figé en haut de l'écran (toutes tailles d'écran) ----------
+   L'en-tête est placé dans un conteneur WordPress de même hauteur, ce qui empêchait
+   l'effet « collant ». C'est désormais ce conteneur qui reste en haut. */
+header.wp-block-template-part { position: sticky; top: 0; z-index: 60; }
+header.wp-block-template-part > .p2-header { position: relative; top: auto; }
+html { scroll-padding-top: 96px; } /* les ancres (#...) ne passent plus sous l'en-tête */
+@media (max-width: 719px) { html { scroll-padding-top: 80px; } }
+body.admin-bar header.wp-block-template-part { top: 32px; }
+@media screen and (max-width: 782px) { body.admin-bar header.wp-block-template-part { top: 46px; } }
+@media screen and (max-width: 600px) { body.admin-bar header.wp-block-template-part { top: 0; } }
+
+.p2-drawer, .p2-drawer-overlay { display: none; }
+
+@media (max-width: 719px) {
+
+	/* ---------- En-tête : boutons groupés à droite ---------- */
+	.p2-nav { gap: 2px; }
+	.p2-brand { margin-right: auto; }
+	.p2-links, .p2-links.open { display: none !important; }
+
+	.p2-hsearch-btn,
+	.p2-burger {
+		display: flex !important; align-items: center; justify-content: center;
+		width: 44px; height: 44px; padding: 0; margin: 0;
+		border: none; border-radius: 12px; background: transparent; color: var(--p2-ink);
+		-webkit-tap-highlight-color: transparent;
+	}
+	.p2-burger { margin-right: -10px; }
+	.p2-hsearch-btn svg { width: 20px; height: 20px; }
+	.p2-hsearch-btn:active, .p2-burger:active { background: rgba(12, 59, 45, .07); }
+
+	/* Icône ☰ dessinée en CSS : 3 traits qui se transforment en croix */
+	.p2-burger { position: relative; font-size: 0; color: transparent; }
+	.p2-burger::before,
+	.p2-burger::after {
+		content: ""; position: absolute; left: 12px; width: 20px; height: 2px;
+		border-radius: 2px; background: var(--p2-ink);
+		transition: transform .3s cubic-bezier(.2, .8, .2, 1), top .3s cubic-bezier(.2, .8, .2, 1), box-shadow .2s ease;
+	}
+	.p2-burger::before { top: 15px; box-shadow: 0 6px 0 var(--p2-ink); }
+	.p2-burger::after  { top: 27px; }
+	.p2-burger[aria-expanded="true"]::before { top: 21px; transform: rotate(45deg); box-shadow: 0 0 0 transparent; }
+	.p2-burger[aria-expanded="true"]::after  { top: 21px; transform: rotate(-45deg); }
+
+	/* ---------- Voile sombre ---------- */
+	.p2-drawer-overlay {
+		display: block; position: fixed; left: 0; right: 0; bottom: 0; top: var(--p2-drawer-top, 64px); z-index: 55;
+		background: rgba(12, 30, 22, .42); opacity: 0; transition: opacity .3s ease;
+	}
+	.p2-drawer-overlay[hidden] { display: none; }
+	.p2-drawer-overlay.is-on { opacity: 1; }
+
+	/* ---------- Panneau ---------- */
+	.p2-drawer {
+		display: flex; flex-direction: column;
+		position: fixed; right: 0; top: var(--p2-drawer-top, 64px); bottom: 0; z-index: 58;
+		width: min(86vw, 360px); box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
+		padding: 10px 22px calc(20px + env(safe-area-inset-bottom, 0px));
+		background: var(--p2-paper);
+		border-left: 1px solid var(--p2-hair-d);
+		box-shadow: -18px 0 40px rgba(12, 30, 22, .14);
+		transform: translateX(100%);
+		transition: transform .34s cubic-bezier(.2, .8, .2, 1);
+	}
+	.p2-drawer[hidden] { display: none; }
+	.p2-drawer.is-on { transform: translateX(0); }
+	html.p2-drawer-lock { overflow: hidden; }
+
+	/* Liens : apparition en cascade, de la droite vers la gauche */
+	.p2-drawer-links { list-style: none; margin: 0; padding: 0; }
+	.p2-drawer-links li { border-bottom: 1px solid var(--p2-hair); }
+	.p2-drawer-links li,
+	.p2-drawer-pro,
+	.p2-drawer-foot {
+		opacity: 0; transform: translateX(28px);
+		transition: opacity .3s ease, transform .4s cubic-bezier(.2, .8, .2, 1);
+	}
+	.p2-drawer.is-on .p2-drawer-links li,
+	.p2-drawer.is-on .p2-drawer-pro,
+	.p2-drawer.is-on .p2-drawer-foot { opacity: 1; transform: none; }
+	.p2-drawer.is-on li:nth-child(1) { transition-delay: .06s; }
+	.p2-drawer.is-on li:nth-child(2) { transition-delay: .09s; }
+	.p2-drawer.is-on li:nth-child(3) { transition-delay: .12s; }
+	.p2-drawer.is-on li:nth-child(4) { transition-delay: .15s; }
+	.p2-drawer.is-on li:nth-child(5) { transition-delay: .18s; }
+	.p2-drawer.is-on li:nth-child(6) { transition-delay: .21s; }
+	.p2-drawer.is-on li:nth-child(7) { transition-delay: .24s; }
+	.p2-drawer.is-on .p2-drawer-pro  { transition-delay: .28s; }
+	.p2-drawer.is-on .p2-drawer-foot { transition-delay: .32s; }
+
+	/* Texte aligné à droite : icône au bord droit, texte juste avant */
+	.p2-drawer { text-align: right; }
+	.p2-drawer-links a {
+		position: relative; display: flex; flex-direction: row-reverse; align-items: center; justify-content: flex-start; gap: 14px;
+		min-height: 56px; font-size: 17px; font-weight: 400; color: var(--p2-ink); text-decoration: none;
+	}
+	.p2-drawer-links svg {
+		flex: none; width: 21px; height: 21px; fill: none; stroke: var(--p2-gray);
+		stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+	}
+	.p2-drawer-links em {
+		margin-right: 2px; padding: 2px 8px; border-radius: 99px;
+		font-style: normal; font-size: 11.5px; font-weight: 500;
+		color: var(--p2-emer-d); background: var(--p2-emer-pale);
+	}
+	.p2-drawer-links a:active { background: rgba(12, 59, 45, .04); }
+
+	/* Page en cours */
+	.p2-drawer-links a.is-on { color: var(--p2-emer-d); font-weight: 500; }
+	.p2-drawer-links a.is-on svg { stroke: var(--p2-emer); stroke-width: 2; }
+	.p2-drawer-links a.is-on::before {
+		content: ""; position: absolute; right: -22px; top: 14px; bottom: 14px;
+		width: 3px; border-radius: 3px 0 0 3px; background: var(--p2-emer);
+	}
+
+	/* Encart établissements */
+	/* Encart établissements : placé en bas du panneau */
+	.p2-drawer-links { margin-bottom: 24px; }
+	.p2-drawer-pro { margin-top: auto; padding: 18px; border-radius: 16px; background: var(--p2-forest); }
+	.p2-drawer-pro p { margin: 0 0 14px !important; font-size: 13.5px; line-height: 1.5; color: var(--p2-mist); }
+	.p2-drawer-pro b { display: block; margin-bottom: 2px; font-size: 15px; font-weight: 500; color: #fff; }
+	.p2-drawer-cta {
+		display: flex; align-items: center; justify-content: center; min-height: 46px;
+		border-radius: 99px; background: #fff; color: var(--p2-ink);
+		font-size: 15px; font-weight: 500; text-decoration: none;
+	}
+
+	.p2-drawer-foot { margin: 0 !important; padding-top: 14px; font-size: 13px; }
+	.p2-drawer-foot a { display: inline-block; padding: 6px 0; color: var(--p2-gray); text-decoration: none; }
+	.p2-drawer-foot > a { color: var(--p2-ink); }
+	.p2-drawer-foot span { display: flex; justify-content: flex-end; gap: 18px; }
+}
+
+@media (max-width: 719px) and (prefers-reduced-motion: reduce) {
+	.p2-drawer, .p2-drawer-overlay, .p2-burger::before, .p2-burger::after,
+	.p2-drawer-links li, .p2-drawer-pro, .p2-drawer-foot { transition: none !important; transform: none; }
+}

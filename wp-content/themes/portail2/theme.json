@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": { "contentSize": "880px", "wideSize": "1280px" },
+    "useRootPaddingAwareAlignments": true,
+    "color": {
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "palette": [
+        { "slug": "base", "color": "#F6F4EE", "name": "Fond papier" },
+        { "slug": "surface", "color": "#FFFFFF", "name": "Surface" },
+        { "slug": "contrast", "color": "#16211A", "name": "Texte" },
+        { "slug": "secondary", "color": "#5B6660", "name": "Texte secondaire" },
+        { "slug": "primary", "color": "#0E9F6E", "name": "Vert émeraude" },
+        { "slug": "primary-dark", "color": "#0A6B4C", "name": "Vert foncé" },
+        { "slug": "accent-soft", "color": "#E2F3EC", "name": "Vert clair" },
+        { "slug": "border", "color": "#E7E1D4", "name": "Bordure sable" },
+        { "slug": "amber", "color": "#D99A2B", "name": "Ambre" },
+        { "slug": "cames", "color": "#3568A8", "name": "Bleu CAMES" },
+        { "slug": "footer", "color": "#0C3B2D", "name": "Vert forêt" }
+      ]
+    },
+    "typography": {
+      "fluid": true,
+      "customFontSize": true,
+      "fontFamilies": [
+        { "fontFamily": "\"Poppins\", system-ui, -apple-system, sans-serif", "slug": "poppins", "name": "Poppins" }
+      ],
+      "fontSizes": [
+        { "slug": "small", "size": "14px", "name": "Petit" },
+        { "slug": "medium", "size": "16px", "name": "Normal" },
+        { "slug": "large", "size": "20px", "name": "Grand" },
+        { "slug": "x-large", "size": "30px", "name": "Très grand" },
+        { "slug": "xx-large", "size": "46px", "name": "Titre" }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "%", "rem", "vh", "vw"],
+      "spacingSizes": [
+        { "slug": "20", "size": "16px", "name": "1" },
+        { "slug": "40", "size": "24px", "name": "2" },
+        { "slug": "50", "size": "40px", "name": "3" },
+        { "slug": "60", "size": "64px", "name": "4" },
+        { "slug": "70", "size": "96px", "name": "5" }
+      ]
+    }
+  },
+  "styles": {
+    "spacing": { "padding": { "top": "0px", "bottom": "0px", "left": "0px", "right": "0px" } },
+    "color": { "background": "var:preset|color|base", "text": "var:preset|color|contrast" },
+    "typography": {
+      "fontFamily": "var:preset|font-family|poppins",
+      "fontSize": "16px",
+      "lineHeight": "1.6"
+    },
+    "elements": {
+      "link": { "color": { "text": "var:preset|color|primary-dark" } },
+      "heading": {
+        "typography": { "fontWeight": "500", "lineHeight": "1.2" },
+        "color": { "text": "var:preset|color|contrast" }
+      },
+      "button": {
+        "color": { "background": "var:preset|color|primary", "text": "#FFFFFF" },
+        "border": { "radius": "999px" },
+        "spacing": { "padding": { "top": "13px", "bottom": "13px", "left": "26px", "right": "26px" } },
+        "typography": { "fontWeight": "500" },
+        ":hover": { "color": { "background": "var:preset|color|primary-dark", "text": "#FFFFFF" } }
+      }
+    },
+    "blocks": {
+      "core/button": { "border": { "radius": "999px" } }
+    }
+  },
+  "templateParts": [
+    { "name": "header", "title": "En-tête", "area": "header" },
+    { "name": "footer", "title": "Pied de page", "area": "footer" }
+  ]
+}

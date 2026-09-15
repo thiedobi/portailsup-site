@@ -1,0 +1,371 @@
+/*
+ * PortailSup — optimisation de l'affichage mobile (écrans ≤ 719 px)
+ * Ajouté le 11/09/2026. Chargé après portail2.css.
+ * Toutes les règles sont limitées aux petits écrans : l'affichage ordinateur ne change pas.
+ * Pour annuler : supprimer ce fichier ou retirer son chargement dans functions.php.
+ */
+
+@media (max-width: 719px) {
+
+	/* ============ 1. BASE : pas de débordement, pas de zoom iOS ============ */
+
+	html, body { overflow-x: clip; }
+
+	/* 16 px minimum dans les champs : empêche le zoom automatique sur iPhone */
+	html body input:not([type=checkbox]):not([type=radio]):not([type=range]),
+	html body select:not([multiple]),
+	html body textarea:not([hidden]) { font-size: 16px; }
+
+	.p2-eform input,
+	.p2-eform textarea { box-sizing: border-box; max-width: 100%; }
+	.p2-etab .p2-wrap > * { min-width: 0; }
+
+	/* ============ 2. EN-TÊTE ============ */
+
+	.p2-nav { height: 64px; }
+	.p2-hsearch-go { min-width: 44px; min-height: 44px; justify-content: center; }
+	/* Loupe et bouton menu : voir menu-mobile.css */
+
+	/* ============ 3. ACCUEIL ============ */
+
+	/* Encart « Tu hésites ? » sur une seule ligne lisible */
+	.p2-quizlink {
+		display: inline-block; text-align: center; line-height: 1.5;
+		font-size: 14px; padding: 10px 18px; max-width: 100%;
+	}
+	.p2-quizlink svg { display: inline-block; vertical-align: -2px; margin-right: 6px; }
+
+	/* Suggestions « Fréquent » : masquées en mobile (14/09/2026) */
+	.p2-sugg { display: none !important; }
+	.p2-trust { font-size: 13px; gap: 10px 22px; margin-top: 24px !important; }
+	.p2-eyebrow { font-size: 12px; letter-spacing: .16em; }
+
+	/* Photo + atouts */
+	.p2-intro { padding-top: 40px; padding-bottom: 44px; gap: 24px; }
+	.p2-intro-photo { min-height: 200px; }
+	.p2-feat { padding: 14px 0; }
+	.p2-feat h3 { font-size: 15px; }
+	.p2-feat p { font-size: 13.5px; }
+
+	/* Titres de section */
+	.p2-sec-head { margin-bottom: 24px; }
+	.p2-sec-link { display: inline-block; padding-top: 10px; font-size: 14px; }
+
+	/* Comment ça marche */
+	.p2-steps-sec { padding-top: 52px; padding-bottom: 56px; }
+	.p2-steps { gap: 26px; margin-top: 28px; }
+	.p2-step h3 { font-size: 16px; }
+	.p2-step p { font-size: 14.5px; line-height: 1.55; }
+
+	/* Domaines : 2 colonnes au lieu d'une */
+	.p2-dgrid { grid-template-columns: repeat(2, 1fr); }
+	.p2-dcell { padding: 18px 16px 16px; }
+	.p2-dcell:nth-child(odd) { border-right: 1px solid var(--p2-hair-d) !important; }
+	.p2-dcell:nth-last-child(-n+2) { border-bottom: none !important; }
+	.p2-dcell h3 { font-size: 15px; line-height: 1.3; margin: 6px 0 8px; padding-right: 14px; }
+	.p2-dcell .p2-ne { top: 16px; right: 14px; }
+	.p2-idx { font-size: 12px; }
+	.p2-count { font-size: 13px; }
+
+	/* Écoles en vedette */
+	.p2-ecard .p2-photo { height: 140px; }
+	.p2-info { padding: 16px 18px 18px; }
+	.p2-info .p2-typ { font-size: 13px; }
+	.p2-info .p2-cnt { font-size: 13px; }
+
+	/* « La sélection du mois » : le tableau devient une liste de cartes */
+	.p2-ftable, .p2-ftable tbody { display: block; width: 100%; }
+	.p2-ftable thead { display: none; }
+	.p2-ftable tbody tr {
+		display: grid; grid-template-columns: 1fr auto; column-gap: 14px; row-gap: 3px;
+		padding: 16px 0; border-top: 1px solid var(--p2-hair);
+	}
+	.p2-ftable tbody tr:first-child { border-top: 1px solid var(--p2-hair-d); }
+	.p2-ftable tbody tr:last-child { border-bottom: 1px solid var(--p2-hair); }
+	.p2-ftable td,
+	.p2-ftable tr:first-child td,
+	.p2-ftable tbody tr:last-child td { display: block; padding: 0; border: none; text-align: left; }
+	.p2-ftable tbody tr td:nth-child(3),
+	.p2-ftable tbody tr td:nth-child(4) { display: none; }
+	.p2-ftable td.p2-fname { grid-column: 1; font-size: 15.5px; line-height: 1.35; }
+	.p2-ftable td:nth-child(2) { grid-column: 1; font-size: 13.5px; line-height: 1.4; }
+	.p2-ftable td.p2-price { grid-column: 1; margin-top: 4px; font-size: 14px; font-weight: 600; color: var(--p2-emer-d); }
+	.p2-ftable td.p2-go { grid-column: 2; grid-row: 1 / span 3; align-self: center; width: auto; }
+	.p2-ftable td.p2-go a {
+		display: flex; align-items: center; justify-content: center;
+		width: 44px; height: 44px; border-radius: 50%;
+		border: 1px solid var(--p2-hair-d); font-size: 17px;
+	}
+	.p2-legend { font-size: 12.5px; gap: 10px 22px; }
+
+	/* Formulaire « Votre école mérite d'être trouvée » */
+	.p2-etab { padding: 52px 0 56px; }
+	.p2-etab .p2-wrap { gap: 32px; }
+	.p2-etab li { font-size: 14.5px; }
+	.p2-eform-title { font-size: 14.5px; }
+	.p2-eform label { font-size: 13px; }
+	.p2-eform .p2-note { font-size: 12.5px; }
+	.p2-eform .p2-btn { min-height: 48px; }
+
+	/* Appel final */
+	.p2-cta { padding-top: 56px; padding-bottom: 60px; }
+	.p2-cta .p2-btn { margin-top: 22px; min-height: 48px; }
+
+	/* ============ 4. PIED DE PAGE ============ */
+
+	.p2-footer { padding-top: 44px; }
+	.p2-footer .p2-fgrid { grid-template-columns: 1fr 1fr !important; gap: 30px 18px; }
+	.p2-footer .p2-fgrid > div:first-child,
+	.p2-footer .p2-fgrid > div:last-child { grid-column: 1 / -1; }
+	.p2-footer .p2-fgrid > div:last-child ul { display: flex; flex-wrap: wrap; column-gap: 22px; }
+	.p2-footer h4 { font-size: 11px; margin-bottom: 6px; }
+	.p2-footer li { margin-bottom: 0; }
+	.p2-footer ul a { display: block; padding: 8px 0; font-size: 14px; line-height: 1.4; }
+	.p2-tagline { font-size: 14px; line-height: 1.55; }
+	.p2-fcontact, .p2-fcontact a { font-size: 14px; }
+	.p2-fsoc a { width: 44px; height: 44px; font-size: 13px; }
+	.p2-fbottom { margin-top: 32px; flex-direction: column; gap: 6px; font-size: 12px; }
+	.p2-flegal { gap: 0 20px; }
+	.p2-flegal a { display: inline-block; padding: 8px 0; font-size: 13px; }
+
+	/* ============ 5. PAGE FORMATIONS (résultats) ============ */
+
+	/* Suggestions masquées : on resserre l'espace sous la barre (14/09/2026) */
+	.clarte-frm-hero { margin-top: 12px !important; padding-bottom: 4px !important; }
+	.clarte-frm-layout { padding-top: 10px !important; row-gap: 0 !important; }
+
+	/* Barre de recherche : suppression de l'espace vide à gauche */
+	.p2-frm-hero .clarte-searchbar { padding: 10px; }
+	.p2-frm-hero .clarte-searchbar input { width: 100%; padding: 10px 8px; }
+	.p2-frm-hero .clarte-searchbar button { min-height: 48px; }
+
+	/* Outils : Filtres + Favoris + Tri sur une seule ligne (14/09/2026) */
+	.clarte-results__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+	.clarte-results__head .p2-head-left { display: contents; }
+	.clarte-results__head .p2-filterbtn { order: 1; flex: 0 0 auto; padding: 8px 10px; gap: 6px; font-size: 14px; }
+	.clarte-results__head .p2-head-left .count { order: 4; flex: 0 0 100%; margin: 0; }
+	.clarte-results__head .p2-headtools { order: 2; flex: 1 1 0; width: auto; min-width: 0; gap: 8px; }
+	.p2-filterbtn { min-height: 44px; }
+	/* Favoris : cœur + compteur seulement, pour laisser la place au tri */
+	.p2-favtoggle { min-height: 44px; flex: none; font-size: 0; gap: 6px; padding: 8px 12px; }
+	.p2-favtoggle b { font-size: 14px; }
+	.p2-vt { width: 36px; height: 34px; }
+	.p2-headtools .sort { flex: 1 1 auto; min-width: 0; }
+	.p2-headtools .clarte-select { width: 100%; min-width: 0; min-height: 44px; font-size: 13px; padding-left: 10px; padding-right: 22px; background-position: right 7px center; }
+	/* Tres petits ecrans : bouton Filtres en icone seule */
+	@media (max-width: 349px) {
+		.clarte-results__head .p2-filterbtn { font-size: 0; padding: 8px; }
+		.clarte-results__head .p2-filterbtn-badge { font-size: 11px; }
+	}
+
+	/* Encart « Ajouter (+) jusqu'à 3 formations » sur une ligne */
+	.p2-cmp-hint { display: block; font-size: 13.5px; line-height: 1.5; }
+	.p2-cmp-hint svg { display: inline-block; vertical-align: -3px; margin-right: 6px; }
+
+	/* Cartes formation : image plus basse, boutons plus grands */
+	.p2-rc-img { height: 120px; }
+	.p2-fav, .p2-cmpbox { height: 40px; min-width: 40px; }
+	.p2-fav-ico, .p2-cmpbox-ico { width: 40px; height: 40px; }
+	.p2-cmpbox { top: 10px; right: 58px; }
+	.p2-rc-logo { width: 48px; height: 48px; }
+	.p2-rc-logo .clarte-monogram { font-size: 9.5px; letter-spacing: 0; }
+	.p2-rc-cert { font-size: 11px; }
+	.p2-rc-school { font-size: 13px; }
+	.p2-rc-meta { font-size: 13px; }
+	.p2-rc-go { width: 44px; height: 44px; }
+
+	/* ============ 6. FICHES FORMATION ET ÉCOLE ============ */
+
+	/* Onglets : une seule ligne qui défile au doigt */
+	.clarte-ff-tabs,
+	.clarte-ct-tabs {
+		flex-wrap: nowrap; gap: 24px; overflow-x: auto; overflow-y: hidden;
+		-webkit-overflow-scrolling: touch; scrollbar-width: none;
+		padding-right: 32px;
+		-webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+		mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+	}
+	.clarte-ff-tabs::-webkit-scrollbar,
+	.clarte-ct-tabs::-webkit-scrollbar { display: none; }
+	.clarte-ff-tab,
+	.clarte-ct-tab { flex: none; white-space: nowrap; min-height: 44px; }
+	.clarte-ff-tab.on::after,
+	.clarte-ct-tab.on::after { bottom: 0; }
+
+	/* Bouton « Télécharger la plaquette » en haut de l'image */
+	.p2-ffmain .p2-plaquette-btn { top: 12px; bottom: auto; right: 12px; font-size: 13px; padding: 10px 16px; }
+
+	/* Encart « informations essentielles » (fiches formation ET école) : 2 colonnes régulières.
+	   - Nombre de cases pair (ex. 6) : grille complète 2 × 3.
+	   - Nombre impair : la 1re case (info clé) prend toute la largeur, les autres vont par 2.
+	   Résultat : jamais de case seule ni de trou en fin d'encart. */
+	.p2-infobar { display: grid; grid-template-columns: 1fr 1fr; }
+	.p2-infobar .p2-infocell { padding: 13px 16px; border-right: none; border-bottom: 1px solid var(--p2-hair); }
+	.p2-infobar .p2-infocell span { font-size: 11px; }
+	.p2-infobar .p2-infocell b { font-size: 14px; white-space: normal; }
+	/* nombre pair : trait vertical après chaque case de gauche (positions 1, 3, 5…) */
+	.p2-infobar .p2-infocell:first-child:nth-last-child(even),
+	.p2-infobar .p2-infocell:first-child:nth-last-child(even) ~ .p2-infocell:nth-child(odd) { border-right: 1px solid var(--p2-hair); }
+	/* nombre impair : 1re case en pleine largeur, puis cases de gauche en positions 2, 4, 6… */
+	.p2-infobar .p2-infocell:first-child:nth-last-child(odd) { grid-column: 1 / -1; padding: 14px 16px; }
+	.p2-infobar .p2-infocell:first-child:nth-last-child(odd) b { font-size: 17px; margin-top: 4px; }
+	.p2-infobar .p2-infocell:first-child:nth-last-child(odd) ~ .p2-infocell:nth-child(even) { border-right: 1px solid var(--p2-hair); }
+	/* dernière ligne sans trait du bas */
+	.p2-infobar .p2-infocell:last-child,
+	.p2-infobar .p2-infocell:nth-last-child(2):not(:first-child:nth-last-child(odd)) { border-bottom: none; }
+
+	/* ============ 7. PAGE ÉCOLES ============ */
+
+	.clarte-ec-bar { padding: 12px; gap: 10px; }
+	.clarte-ec-bar .clarte-select { flex: 1 1 100%; width: 100%; min-width: 0; min-height: 44px; }
+	.clarte-ec-search { flex: 1 1 100%; min-width: 0; }
+	.clarte-ec-search input { padding: 11px 0; }
+	.clarte-ec-card { padding: 18px; }
+	.clarte-ec-logo .clarte-monogram { font-size: 10px; letter-spacing: 0; }
+
+	/* ============ 8. BLOG ============ */
+
+	.clarte-bfilter button { min-height: 40px; }
+	.clarte-bcard__img { height: 150px; }
+	.clarte-bcard__cat { font-size: 11px; }
+	.clarte-bcard__body { padding: 16px 18px 18px; gap: 6px; }
+	.clarte-bcard__body h3 { margin: 0; font-size: 17px; }
+	.clarte-bcard__body p {
+		font-size: 14px; line-height: 1.55;
+		display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+	}
+	.clarte-bcard__meta { font-size: 12.5px; }
+
+	/* ============ 9. À PROPOS ============ */
+
+	.clarte-ab-hero { padding-left: 24px; padding-right: 24px; }
+	.clarte-ab-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 32px 0; }
+	.clarte-ab-stat { padding: 18px 10px; }
+	.clarte-ab-stat .n { font-size: 28px; }
+	.clarte-ab-stat .l { font-size: 12.5px; line-height: 1.4; }
+
+	/* ============ 10. COMPLÉMENTS LISIBILITÉ ============ */
+
+	.clarte-ff-form label { font-size: 13px; }
+	.clarte-ff-form .p2-fnote { font-size: 12px; line-height: 1.45; }
+	.clarte-ff-form .fs { font-size: 13.5px; }
+	.clarte-ec-desc { font-size: 13.5px; line-height: 1.5; }
+	.clarte-ec-loc, .clarte-ec-meta > span { font-size: 13px; }
+	.clarte-ec-type { font-size: 11.5px; }
+	.clarte-fcard__cat { font-size: 11px; }
+	.clarte-fcard__meta { font-size: 13px; }
+	.clarte-sugg-cat { font-size: 11px; }
+	.p2-share-a { width: 40px; height: 40px; }
+	.p2-share-l { white-space: nowrap; }
+	.p2-schoolhero-share .p2-share-a { width: 36px; height: 36px; }
+	.clarte-bc a { display: inline-block; padding: 6px 0; }
+	.clarte-filters__head .clarte-clear { padding: 12px 0; }
+	.p2-filters-close { width: 44px; height: 44px; }
+	.p2-fcontact a { display: inline-block; padding: 8px 0; }
+	.clarte-article__back { display: inline-block; padding: 10px 0; }
+	.clarte-ec-search input { width: 100%; min-width: 0; }
+
+	/* ============ 11. CARTE FORMATION UNIQUE (version épurée) ============
+	   Même présentation partout : titre, école, petites étiquettes (ville, niveau,
+	   durée, langue, accréditation), puis prix et actions. Ni photo ni logo.
+	   L'accueil garde sa présentation. */
+
+	/* --- Page Formations : résultats (vue cartes et vue liste) --- */
+	.clarte-results__grid .p2-rescard {
+		position: relative; display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px;
+		padding: 18px 16px 14px; background: var(--p2-white);
+	}
+	.clarte-results__grid .p2-rescard .p2-rc-img,
+	.clarte-results__grid .p2-rescard .p2-rc-body,
+	.clarte-results__grid .p2-rescard .p2-rc-icons,
+	.clarte-results__grid .p2-rescard .p2-rc-certs { display: contents; }
+	.clarte-results__grid .p2-rescard .p2-rc-img img,
+	.clarte-results__grid .p2-rescard .p2-rc-logo,
+	.clarte-results__grid .p2-rescard .p2-rc-meta,
+	.clarte-results__grid .p2-rescard .p2-rc-cta { display: none; }
+	.clarte-results__grid .p2-rescard .p2-rc-img::before,
+	.clarte-results__grid .p2-rescard .p2-rc-img::after { display: none; }
+
+	.clarte-results__grid .p2-rescard .p2-rc-title {
+		order: 1; flex: 0 0 100%; font-size: 18px; font-weight: 500; line-height: 1.3; margin: 0;
+	}
+	.clarte-results__grid .p2-rescard .p2-rc-school {
+		order: 2; flex: 0 0 100%; margin-top: 4px; font-size: 13px; font-weight: 400; color: var(--p2-gray);
+	}
+
+	/* Étiquettes : ville, niveau, durée, langue, accréditation */
+	.clarte-results__grid .p2-rescard .p2-rc-city { order: 3; }
+	.clarte-results__grid .p2-rescard .p2-rc-icons > span { order: 4; }
+	.clarte-results__grid .p2-rescard .p2-rc-icons > span:nth-child(2),
+	.clarte-results__grid .p2-rescard .p2-rc-icons > span:nth-child(4) { display: none; }
+	.clarte-results__grid .p2-rescard .p2-rc-cert { order: 5; }
+	.clarte-results__grid .p2-rescard .p2-rc-city,
+	.clarte-results__grid .p2-rescard .p2-rc-icons > span,
+	.clarte-results__grid .p2-rescard .p2-rc-cert {
+		display: inline-flex; align-items: center; position: static; margin-top: 10px;
+		padding: 4px 9px; border: 1px solid var(--p2-hair-d); border-radius: 6px;
+		background: transparent; box-shadow: none;
+		font-size: 11px; font-weight: 500; color: var(--p2-gray); white-space: nowrap;
+	}
+	.clarte-results__grid .p2-rescard .p2-rc-icons > span svg { display: none; }
+	.clarte-results__grid .p2-rescard .p2-rc-cert { border-color: #CBE8DC; color: var(--p2-emer-d); }
+	.clarte-results__grid .p2-rescard .p2-rc-cert.is-cames { border-color: #C7D7EA; color: #2B5A94; }
+
+	/* Ligne du bas : prix à gauche ; comparer, favori, flèche à droite */
+	.clarte-results__grid .p2-rescard .p2-rc-right {
+		order: 6; flex: 0 0 100%; display: flex; align-items: center; min-height: 44px;
+		margin-top: 16px; padding: 14px 150px 0 0; border-top: 1px solid var(--p2-hair);
+	}
+	.clarte-results__grid .p2-rescard .p2-rc-price { font-size: 15.5px; font-weight: 600; }
+	.clarte-results__grid .p2-rescard .p2-rc-go,
+	.clarte-results__grid .p2-rescard .p2-fav,
+	.clarte-results__grid .p2-rescard .p2-cmpbox { position: absolute; top: auto; bottom: 14px; }
+	.clarte-results__grid .p2-rescard .p2-rc-go { right: 16px; width: 42px; height: 42px; display: flex; }
+	.clarte-results__grid .p2-rescard .p2-fav,
+	.clarte-results__grid .p2-rescard .p2-cmpbox {
+		width: 40px; height: 40px; min-width: 40px; bottom: 15px;
+		border: 1px solid var(--p2-hair); background: var(--p2-white); box-shadow: none;
+	}
+	.clarte-results__grid .p2-rescard .p2-fav { right: 66px; }
+	.clarte-results__grid .p2-rescard .p2-cmpbox { right: 112px; }
+	.clarte-results__grid .p2-rescard .p2-fav-ico,
+	.clarte-results__grid .p2-rescard .p2-cmpbox-ico { width: 38px; height: 38px; }
+	.clarte-results__grid .p2-rescard .p2-fav .p2-fav-txt,
+	.clarte-results__grid .p2-rescard .p2-cmpbox .p2-cmpbox-txt { display: none; }
+	.clarte-results__grid .p2-rescard .p2-fav.is-on { background: var(--p2-emer); border-color: var(--p2-emer); color: #fff; }
+	.clarte-results__grid .p2-rescard .p2-cmpbox.is-on { background: var(--p2-emer); border-color: var(--p2-emer); color: #fff; }
+
+	/* Une seule présentation : le sélecteur cartes/liste ne sert plus sur mobile */
+	.p2-viewtoggle { display: none; }
+	.clarte-results__grid.is-list .p2-rescard { flex-direction: row; flex-wrap: wrap; align-items: center; }
+	.clarte-results__grid.is-list .p2-rescard .p2-rc-img { display: contents; }
+	.clarte-results__grid.is-list .p2-rescard .p2-rc-right {
+		flex-direction: row; align-items: center; justify-content: flex-start; min-width: 0;
+		margin-top: 16px; padding: 14px 150px 0 0; border-top: 1px solid var(--p2-hair);
+	}
+	.clarte-results__grid.is-list .p2-rescard .p2-rc-price { margin-bottom: 0; }
+	.clarte-results__grid.is-list .p2-rescard .p2-fav { top: auto; bottom: 15px; right: 66px; }
+	.clarte-results__grid.is-list .p2-rescard .p2-cmpbox { top: auto; bottom: 15px; right: 112px; }
+
+	/* --- Listes « Autres formations » (fiches et articles) --- */
+	.clarte-fgrid .clarte-fcard { display: block; }
+	.clarte-fgrid .clarte-fcard__img { display: none; }
+	.clarte-fgrid .clarte-fcard__body { display: block; padding: 18px 16px 14px; }
+	.clarte-fgrid .clarte-fcard__title { font-size: 18px; font-weight: 500; line-height: 1.3; }
+	.clarte-fgrid .clarte-fcard__meta { margin-top: 5px; font-size: 13px; color: var(--p2-gray); }
+	.clarte-fgrid .clarte-fcard__badges { margin-top: 12px; gap: 6px; }
+	.clarte-fgrid .clarte-badge {
+		background: transparent !important; border: 1px solid var(--p2-hair-d); color: var(--p2-gray) !important;
+		border-radius: 6px; font-size: 11px; font-weight: 500; padding: 4px 9px;
+	}
+	.clarte-fgrid .clarte-badge--green { border-color: #CBE8DC; color: var(--p2-emer-d) !important; }
+	.clarte-fgrid .clarte-fcard__foot {
+		display: flex; align-items: center; min-height: 42px;
+		margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--p2-hair);
+	}
+	.clarte-fgrid .clarte-fcard__price { font-size: 15.5px; font-weight: 600; color: var(--p2-ink); }
+	.clarte-fgrid .clarte-fcard__more {
+		margin-left: auto; flex: none; width: 42px; height: 42px; border-radius: 50%; font-size: 0;
+		background: var(--p2-emer) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 18px no-repeat;
+	}
+}

@@ -1,0 +1,84 @@
+/*
+ * PortailSup — bouton flottant « Contacter » sur les fiches formation et école
+ * Écrans ≤ 1000 px : le formulaire quitte le bas de page et s'ouvre dans un panneau
+ * qui monte du bas de l'écran. Au-delà, le formulaire reste dans la colonne de droite.
+ * Ajouté le 11/09/2026. Pour annuler : retirer la ligne « inc/contact-flottant.php » dans functions.php.
+ */
+
+.p2-cf-fab, .p2-cf-overlay, .p2-cf-sheet { display: none; }
+
+@media (max-width: 1000px) {
+
+	/* La colonne vidée ne laisse pas d'espace blanc */
+	.p2-ffside.p2-cf-moved { display: none; }
+	body.p2-cf-on { padding-bottom: 84px; }
+
+	/* ---------- Bouton flottant ---------- */
+	.p2-cf-fab {
+		display: inline-flex; align-items: center; gap: 10px;
+		position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50;
+		min-height: 52px; padding: 0 22px 0 18px; margin: 0;
+		border: none; border-radius: 99px; cursor: pointer;
+		background: var(--p2-emer); color: #fff;
+		font-family: inherit; font-size: 15px; font-weight: 500; line-height: 1;
+		box-shadow: 0 10px 28px rgba(12, 59, 45, .32), 0 2px 6px rgba(12, 59, 45, .18);
+		-webkit-tap-highlight-color: transparent;
+		opacity: 0; transform: translateY(24px) scale(.96);
+		transition: opacity .35s ease, transform .45s cubic-bezier(.2, .8, .2, 1), background .15s ease;
+	}
+	.p2-cf-fab.is-ready { opacity: 1; transform: none; }
+	.p2-cf-fab:active { transform: scale(.97); background: var(--p2-emer-d); }
+	.p2-cf-fab:focus-visible { outline: 3px solid rgba(14, 159, 110, .35); outline-offset: 3px; }
+	.p2-cf-fab svg { flex: none; width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+	/* Petit point « en ligne » : réponse sous 48 h */
+	.p2-cf-fab::after {
+		content: ""; position: absolute; top: 9px; left: 32px; width: 8px; height: 8px;
+		border-radius: 50%; background: #7CDEB4; box-shadow: 0 0 0 2px var(--p2-emer);
+	}
+	/* Pendant une saisie ailleurs dans la page, le bouton se retire */
+	html.p2-cf-typing .p2-cf-fab,
+	html.p2-cf-lock .p2-cf-fab { opacity: 0; transform: translateY(24px); pointer-events: none; }
+
+	/* ---------- Voile ---------- */
+	.p2-cf-overlay {
+		display: block; position: fixed; inset: 0; z-index: 980;
+		background: rgba(12, 30, 22, .45); opacity: 0; transition: opacity .3s ease;
+	}
+	.p2-cf-overlay[hidden] { display: none; }
+	.p2-cf-overlay.is-on { opacity: 1; }
+
+	/* ---------- Panneau du formulaire ---------- */
+	.p2-cf-sheet {
+		display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 990;
+		max-height: 92vh; max-height: 92dvh; overflow-y: auto; overscroll-behavior: contain;
+		box-sizing: border-box; width: 100%; max-width: 640px; margin: 0 auto;
+		padding: 8px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+		background: var(--p2-white); border-radius: 22px 22px 0 0;
+		box-shadow: 0 -18px 50px rgba(12, 30, 22, .22);
+		transform: translateY(100%); transition: transform .38s cubic-bezier(.2, .8, .2, 1);
+	}
+	.p2-cf-sheet[hidden] { display: none; }
+	.p2-cf-sheet.is-on { transform: translateY(0); }
+	html.p2-cf-lock { overflow: hidden; }
+
+	.p2-cf-top { position: sticky; top: -8px; z-index: 2; display: flex; justify-content: center; align-items: center; height: 36px; margin: -8px -20px 0; background: var(--p2-white); border-radius: 22px 22px 0 0; }
+	.p2-cf-handle { width: 40px; height: 4px; border-radius: 4px; background: var(--p2-hair-d); }
+	.p2-cf-close {
+		position: absolute; right: 8px; top: 2px;
+		display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+		border: none; background: none; border-radius: 50%; color: var(--p2-ink); cursor: pointer;
+	}
+	.p2-cf-close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+	/* Le formulaire d'origine, sans son cadre, dans le panneau */
+	.p2-cf-sheet .clarte-ff-form {
+		position: static; top: auto; margin: 0; width: 100%;
+		padding: 0; border: none; border-radius: 0; box-shadow: none; background: transparent;
+	}
+	.p2-cf-sheet .clarte-ff-form h3 { margin: 0; padding-right: 40px; font-size: 20px; }
+	.p2-cf-sheet .clarte-ff-form button[type=submit] { min-height: 50px; font-size: 16px; }
+}
+
+@media (max-width: 1000px) and (prefers-reduced-motion: reduce) {
+	.p2-cf-fab, .p2-cf-overlay, .p2-cf-sheet { transition: none; }
+}
