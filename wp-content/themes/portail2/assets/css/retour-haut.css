@@ -1,0 +1,52 @@
+/*
+ * PortailSup — bouton flottant « Retour en haut de page », sur l'ensemble du site.
+ * Apparaît après un défilement vers le bas.
+ * Écrans ≤ 1000 px sur les fiches école et formation : masqué, la place est prise
+ * par le bouton "Contacter l'établissement" (voir contact-flottant.css).
+ * Ajouté le 17/09/2026. Pour annuler : retirer la ligne « inc/retour-haut.php » dans functions.php.
+ */
+
+.p2-rh-btn {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 40;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	padding: 0;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+	background: var(--p2-emer);
+	color: #fff;
+	box-shadow: 0 10px 28px rgba(12, 59, 45, .28), 0 2px 6px rgba(12, 59, 45, .16);
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(16px) scale(.94);
+	transition: opacity .3s ease, transform .35s cubic-bezier(.2, .8, .2, 1), background .15s ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.p2-rh-btn.is-visible { opacity: 1; pointer-events: auto; transform: none; }
+.p2-rh-btn:hover { background: var(--p2-emer-d); }
+.p2-rh-btn:active { transform: scale(.96); }
+.p2-rh-btn:focus-visible { outline: 3px solid rgba(14, 159, 110, .35); outline-offset: 3px; }
+.p2-rh-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 1000px) {
+	.p2-rh-btn {
+		right: 16px;
+		bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+		width: 46px;
+		height: 46px;
+	}
+	/* La place est prise par « Contacter l'établissement » sur ces deux gabarits */
+	body.single-formation .p2-rh-btn,
+	body.single-ecole .p2-rh-btn { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.p2-rh-btn { transition: opacity .2s ease; }
+}
