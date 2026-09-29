@@ -44,6 +44,15 @@
 /* ---------- en-tête ---------- */
 .p2-header{position:sticky;top:0;z-index:50;background:rgba(246,244,238,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--p2-hair)}
 body.admin-bar .p2-header{top:32px}
+/* La barre d'administration WordPress (32px) décale le header en dessous
+   d'elle ; tous les encarts « sticky » calés sur top:96px doivent donc
+   descendre de 32px de plus quand cette barre est visible, sinon ils
+   remontent sous le header pendant le scroll. Ajouté le 19/09/2026. */
+body.admin-bar .p2-ff-nav-layout .p2-ff-nav,
+body.admin-bar .p2-ec-nav-layout .p2-ec-nav,
+body.admin-bar .clarte-ff-form,
+body.admin-bar .clarte-ffnav,
+body.admin-bar .p2-sidecol{top:128px}
 .p2-nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:18px}
 .p2-brand{font-size:21px;font-weight:500;color:var(--p2-ink);text-decoration:none;display:flex;align-items:baseline;gap:2px}
 .p2-dot{width:7px;height:7px;border-radius:50%;background:var(--p2-emer);display:inline-block}
@@ -1234,7 +1243,7 @@ body > .p2-cmpbar .p2-cmp-open:disabled{background:rgba(255,255,255,.3);color:#e
 .p2-schoolhero{position:relative;display:flex;align-items:flex-end;height:440px;border-radius:16px;overflow:hidden;background:#132019}
 .p2-schoolhero::after{content:none}
 .p2-schoolhero > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:none;opacity:1 !important;z-index:0}
-.p2-schoolhero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,rgba(8,20,15,.92) 0%,rgba(8,20,15,.62) 26%,rgba(8,20,15,.16) 50%,rgba(8,20,15,0) 70%)}
+.p2-schoolhero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to top,rgba(8,20,15,.94) 0%,rgba(8,20,15,.78) 38%,rgba(8,20,15,.5) 70%,rgba(8,20,15,.32) 100%)}
 .p2-schoolhero-in{position:relative;z-index:2;width:100%;display:flex;align-items:flex-end;gap:20px;padding:30px 32px}
 .p2-schoolhero-logo{position:relative;flex:none;width:78px;height:78px;border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(0,0,0,.3);overflow:hidden;display:flex;align-items:center;justify-content:center}
 .p2-schoolhero-logo img,.p2-schoolhero-logo .clarte-logoimg{width:100%;height:100%;object-fit:contain;padding:9px;box-sizing:border-box}
@@ -1373,3 +1382,88 @@ body > .p2-cmpbar .p2-cmp-open:disabled{background:rgba(255,255,255,.3);color:#e
 .p2-lb-next{right:20px}
 .p2-lb-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.92);font-size:13.5px;background:rgba(0,0,0,.32);padding:5px 14px;border-radius:99px}
 @media (max-width:560px){.p2-lb{padding:16px}.p2-lb-nav{width:42px;height:42px;font-size:24px}.p2-lb-prev{left:8px}.p2-lb-next{right:8px}}
+
+/* ============================================================
+   Fiche formation : sections en navigation verticale (une seule page,
+   clic sur la nav = défilement direct vers la section). Remplace
+   l'ancien système d'onglets horizontaux. Ajouté le 19/09/2026.
+   ============================================================ */
+.p2-ff-nav-layout{display:flex;gap:28px;align-items:flex-start;margin-top:36px;overflow:visible}
+.p2-ff-nav-layout .p2-ff-nav{flex:0 0 220px;width:220px;box-sizing:border-box;position:sticky;top:96px;align-self:flex-start;z-index:5;background:#fff;border:1px solid var(--p2-hair-d);border-radius:14px;padding:10px;box-shadow:0 14px 34px rgba(22,33,26,.06)}
+.p2-ff-sections{overflow:visible}
+.p2-ff-nav-layout .p2-ff-navlink{display:block;padding:11px 16px;border-radius:10px;font-size:14px;font-weight:500;color:#5B6660;border-left:3px solid transparent;text-decoration:none;scroll-margin-top:96px}
+.p2-ff-nav-layout .p2-ff-navlink:hover{color:#16211A}
+.p2-ff-nav-layout .p2-ff-navlink.on{color:#0A6B4C;font-weight:600;border-left-color:#0E9F6E;background:#EFECE3}
+.p2-ff-sections{flex:1;min-width:0}
+.p2-ff-section{scroll-margin-top:96px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid #E7E1D4}
+.p2-ff-section:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.p2-ff-section h2{font-size:19px;font-weight:700;color:#16211A;margin:0 0 14px}
+.p2-ff-section p{color:#5B6660;font-size:15px;line-height:1.75;margin:0 0 14px}
+.p2-ff-section a{color:#0A6B4C;text-decoration:none}
+.p2-ff-section a:hover{text-decoration:underline}
+.p2-ff-section a.clarte-estab__cta{display:inline-block;background:#0E9F6E;color:#fff;font-weight:600;font-size:14px;padding:11px 20px;border-radius:999px;text-decoration:none}
+.p2-ff-section a.clarte-estab__cta:hover{background:#0A6B4C;color:#fff;text-decoration:none}
+
+@media(max-width:1000px){
+	.p2-ff-nav-layout{flex-direction:column;gap:6px}
+	.p2-ff-nav-layout .p2-ff-nav{position:static;flex:none;width:100%;display:flex;overflow-x:auto;gap:4px;padding:6px;border:1px solid #E7E1D4;border-radius:12px;background:#fff}
+	.p2-ff-nav-layout .p2-ff-navlink{white-space:nowrap;padding:9px 14px;border-left:none;border-bottom:3px solid transparent;border-radius:8px}
+	.p2-ff-nav-layout .p2-ff-navlink.on{border-left-color:transparent;border-bottom-color:#0E9F6E}
+}
+
+
+/* ============================================================
+   Fiche établissement (école) : navigation verticale à gauche sur
+   desktop (une seule page, clic = défilement direct), accordéon
+   repliable sur mobile. Remplace l'ancien système d'onglets
+   horizontaux. Ajouté le 19/09/2026.
+   ============================================================ */
+.p2-ec-nav-layout{display:flex;gap:28px;align-items:flex-start;margin-top:36px;overflow:visible}
+.p2-ec-nav-layout .p2-ec-nav{flex:0 0 220px;width:220px;box-sizing:border-box;position:sticky;top:96px;align-self:flex-start;z-index:5;background:#fff;border:1px solid var(--p2-hair-d);border-radius:14px;padding:10px;box-shadow:0 14px 34px rgba(22,33,26,.06)}
+.p2-ec-nav-layout .p2-ec-navlink{display:block;padding:11px 16px;border-radius:10px;font-size:14px;font-weight:500;color:#5B6660;border-left:3px solid transparent;text-decoration:none}
+.p2-ec-nav-layout .p2-ec-navlink:hover{color:#16211A}
+.p2-ec-nav-layout .p2-ec-navlink.on{color:#0A6B4C;font-weight:600;border-left-color:#0E9F6E;background:#EFECE3}
+.p2-ec-sections{flex:1;min-width:0;overflow:visible}
+.p2-ec-section{scroll-margin-top:96px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid #E7E1D4}
+.p2-ec-section:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.p2-ec-sec-head{display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;padding:0;margin:0 0 14px;cursor:default;text-align:left;font:inherit}
+.p2-ec-sec-ic,.p2-ec-sec-count,.p2-ec-sec-chev{display:none}
+.p2-ec-sec-label{font-size:19px;font-weight:700;color:#16211A}
+.p2-ec-sec-body{display:block;color:#5B6660;font-size:15px;line-height:1.75}
+.p2-ec-sec-body p{margin:0 0 14px}
+.p2-ec-sec-body a{color:#0A6B4C;text-decoration:none}
+.p2-ec-sec-body a:hover{text-decoration:underline}
+.p2-ec-sec-body a.clarte-estab__cta{display:inline-block;background:#0E9F6E;color:#fff;font-weight:600;font-size:14px;padding:11px 20px;border-radius:999px;text-decoration:none}
+.p2-ec-sec-body a.clarte-estab__cta:hover{background:#0A6B4C;color:#fff;text-decoration:none}
+
+@media(max-width:1000px){
+	.p2-ec-nav-layout{display:block;margin-top:20px}
+	.p2-ec-nav-layout .p2-ec-nav{display:none}
+	.p2-ec-section{background:#fff;border:1px solid #EEF1F0;border-radius:14px;margin-bottom:10px;padding:0;scroll-margin-top:16px}
+	.p2-ec-section:last-child{margin-bottom:10px}
+	.p2-ec-sec-head{cursor:pointer;padding:14px;margin:0}
+	.p2-ec-sec-ic{display:flex;flex:none;width:34px;height:34px;border-radius:10px;background:#E2F3EC;align-items:center;justify-content:center;color:#0A6B4C}
+	.p2-ec-sec-ic svg{width:18px;height:18px}
+	.p2-ec-sec-label{flex:1;font-size:14.5px}
+	.p2-ec-sec-count{display:inline-block;font-size:11.5px;font-weight:700;color:#0A6B4C;background:#E2F3EC;border-radius:10px;padding:2px 9px}
+	.p2-ec-sec-chev{display:block;flex:none;color:#94A3B8;transition:transform .2s}
+	.p2-ec-section.is-open .p2-ec-sec-chev{color:#0A6B4C;transform:rotate(180deg)}
+	.p2-ec-sec-body{display:none;padding:0 14px 16px 58px;font-size:13px}
+	.p2-ec-section.is-open .p2-ec-sec-body{display:block}
+}
+
+
+/* ============================================================
+   Fiche établissement (école) — section « Formations » : liste
+   (niveau + titre cliquable), même principe que les fiches métiers,
+   à la place de la grille de cartes. Ajouté le 19/09/2026.
+   ============================================================ */
+.p2-ecf-list{margin-top:2px}
+.p2-ecfrow{margin-top:0;padding:13px 0;border-bottom:1px solid #EFECE3}
+.p2-ecfrow:first-child{padding-top:0}
+.p2-ecfrow:last-child{border-bottom:0;padding-bottom:0}
+.p2-ecfrow a{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--p2-ink);font-weight:500;font-size:14.5px;text-decoration:none}
+.p2-ecfrow a b{font-weight:700;color:#16211A}
+.p2-ecfrow a:hover{color:var(--p2-emer-d)}
+.p2-ecfrow a:hover b{color:var(--p2-emer-d)}
+.p2-ecf-cta{flex:none;font-size:12.5px;font-weight:600;color:var(--p2-emer-d)}

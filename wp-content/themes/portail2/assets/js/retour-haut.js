@@ -1,5 +1,5 @@
 /**
- * PortailSup — bouton flottant « Retour en haut de page ».
+ * ChoisirSaFormation — bouton flottant « Retour en haut de page ».
  * Ajouté le 17/09/2026. Pour annuler : retirer la ligne « inc/retour-haut.php » dans functions.php.
  */
 (function () {

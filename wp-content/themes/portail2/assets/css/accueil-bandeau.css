@@ -1,5 +1,5 @@
 /*
- * PortailSup — accueil : bandeau sombre sur photo (intégré le 11/09/2026).
+ * ChoisirSaFormation — accueil : bandeau sombre sur photo (intégré le 11/09/2026).
  * Ordinateur : titre, recherche, suggestions, lien vers le test d'orientation.
  * Mobile : photo en haut, recherche qui chevauche, lien vers le test (version simplifiée).
  * Le reste du site garde le fond beige.
@@ -118,3 +118,12 @@
 	font-family: inherit; font-size: 14px; font-weight: 500; text-align: left; color: #0A6B4C;
 }
 .p2-domsugg-all:hover { background: var(--p2-paper); }
+
+/* Supprime la bande beige sous le bandeau (espace automatique de WordPress entre les sections) — 29/09/2026 */
+.p2-home .wp-block-post-content > * { margin-block-start: 0; margin-block-end: 0; }
+.p2-home .p2-hero + .p2-band { border-top: none; }
+
+/* Bandeau photo plus haut sur ordinateur — 29/09/2026 */
+@media (min-width: 720px) {
+	.p2-home .p2-hero { padding-top: 124px; padding-bottom: 112px; }
+}

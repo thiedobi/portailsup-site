@@ -1,0 +1,110 @@
+/* Passerelle entre les blocs WordPress natifs et le design du thème.
+   Ajouté le 18/09/2026 pour rendre les pages modifiables depuis Pages.
+   Pour revenir en arrière : supprimer ce fichier et sa ligne dans functions.php. */
+
+/* 1. Neutralise l'espacement automatique des blocs a l'interieur des pages
+      modifiables : ce sont les regles du theme qui decident.
+      :where() garde une priorite nulle, donc le theme reprend toujours la main. */
+:where(.p2-edit) > *,
+:where(.p2-edit .wp-block-group) > * {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+/* 2. Les images insérées comme blocs remplissent leur cadre. */
+.p2-edit .img > .wp-block-image,
+.p2-edit .imgwrap > .wp-block-image,
+.p2-edit .imgtop > .wp-block-image,
+.p2-edit .p2-photo > .wp-block-image {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+.p2-edit .img > .wp-block-image img,
+.p2-edit .imgwrap > .wp-block-image img,
+.p2-edit .imgtop > .wp-block-image img,
+.p2-edit .p2-photo > .wp-block-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* 3. Boutons : le bloc natif ajoute son propre habillage, on rétablit
+      l'apparence des boutons du thème. */
+.wp-block-button.clarte-btn-acc,
+.wp-block-button.clarte-btn-out,
+.wp-block-button.p2-btn {
+	background: none;
+	border: 0;
+	padding: 0;
+	border-radius: 0;
+}
+.wp-block-button.clarte-btn-acc .wp-block-button__link,
+.wp-block-button.clarte-btn-out .wp-block-button__link {
+	display: inline-block;
+	font-size: 14.5px;
+	font-weight: 500;
+	border-radius: 999px;
+	padding: 12px 24px;
+	text-decoration: none;
+	line-height: 1.31;
+}
+.wp-block-button.clarte-btn-acc .wp-block-button__link {
+	background: var(--p2-emer);
+	color: #fff;
+	border: 1.5px solid transparent;
+}
+.wp-block-button.clarte-btn-acc .wp-block-button__link:hover { background: var(--p2-emer-d); }
+.wp-block-button.clarte-btn-out .wp-block-button__link {
+	background: transparent;
+	color: var(--p2-ink);
+	border: 1.5px solid var(--p2-ink);
+}
+.wp-block-button.clarte-btn-out .wp-block-button__link:hover { background: var(--p2-ink); color: #fff; }
+
+/* Boutons dans l'encart vert de fin de page */
+.clarte-ab-cta .wp-block-button.clarte-btn-acc .wp-block-button__link { background: #fff; color: var(--p2-ink); }
+.clarte-ab-cta .wp-block-button.clarte-btn-acc .wp-block-button__link:hover { background: var(--p2-paper); }
+.clarte-ab-cta .wp-block-button.clarte-btn-out .wp-block-button__link { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+.clarte-ab-cta .wp-block-button.clarte-btn-out .wp-block-button__link:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+/* Rangée de boutons : reprend la disposition d'origine. */
+.wp-block-buttons.acts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+.clarte-ab-cta .wp-block-buttons.acts { margin-top: 0; }
+
+/* 4. Les titres de blocs n'héritent pas de marge parasite. */
+.wp-block-heading { margin-top: 0; }
+
+/* 5. Cartes « Ce qu'on apporte » : l'etiquette et le lien deviennent des
+      paragraphes, on annule la marge automatique des paragraphes. */
+.clarte-ab-audcard p.tag { margin-top: 0; }
+.clarte-ab-audcard p.lnk { margin-top: 0; font-size: 0; }
+.clarte-ab-audcard p.lnk a { font-size: 14px; }
+
+/* 6. Boutons du design V2 (classe p2-btn) utilises sur l'accueil. */
+.wp-block-button.p2-btn .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14.5px;
+	font-weight: 500;
+	border-radius: 999px;
+	padding: 12px 24px;
+	text-decoration: none;
+	line-height: 1.31;
+	background: var(--p2-emer);
+	color: #fff;
+	border: 1.5px solid transparent;
+}
+.wp-block-button.p2-btn .wp-block-button__link:hover { background: var(--p2-emer-d); }
+.wp-block-button.p2-btn-outline .wp-block-button__link {
+	background: transparent;
+	color: var(--p2-ink);
+	border: 1.5px solid var(--p2-ink);
+}
+.wp-block-button.p2-btn-outline .wp-block-button__link:hover { background: var(--p2-ink); color: #fff; }
+
+/* 7. Questions frequentes (page Contact) : retrouve l'aeration d'origine
+      une fois les titres passes en blocs. */
+.p2-edit .clarte-ct-q h4 { margin: 19px 0; }

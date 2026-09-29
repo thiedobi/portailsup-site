@@ -418,7 +418,7 @@ document.addEventListener('change', function (e) {
       var list = picks.map(function (fid) { return cardData(cardByFid(fid)); }).filter(function (d) { return d && d.fid; });
       if (list.length < 2) { return; }
       var rows = rowsFor(list);
-      var waText = 'Je compare ces formations sur PortailSup :\n' + list.map(function (d) { return '• ' + d.title + ' (' + d.ecole + ')'; }).join('\n') + '\n' + window.location.href;
+      var waText = 'Je compare ces formations sur ChoisirSaFormation :\n' + list.map(function (d) { return '• ' + d.title + ' (' + d.ecole + ')'; }).join('\n') + '\n' + window.location.href;
       var wa = 'https://wa.me/?text=' + encodeURIComponent(waText);
 
       var h = '<div class="p2-modal" role="dialog" aria-modal="true" aria-label="Comparaison des formations">';
@@ -554,5 +554,109 @@ document.addEventListener('change', function (e) {
       wrap.setAttribute('hidden', '');
       btn.setAttribute('aria-expanded', 'false');
     }
+  });
+})();
+
+/* Fiche formation : navigation verticale en une seule page — clic sur une
+   section = défilement direct, surbrillance de la section visible au scroll.
+   Ajouté le 19/09/2026. Corrigé le 19/09/2026 : pendant le défilement
+   déclenché par un clic, l'IntersectionObserver traverse toutes les
+   sections intermédiaires et faisait clignoter la surbrillance sur
+   plusieurs liens à la fois (« les clics vont dans tous les sens »).
+   On gèle désormais la surbrillance au lien cliqué jusqu'à la fin du
+   défilement. */
+(function () {
+  var layout = document.querySelector('.p2-ff-nav-layout');
+  if (!layout) { return; }
+  var links = Array.prototype.slice.call(layout.querySelectorAll('.p2-ff-navlink'));
+  var sections = links.map(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  });
+  var isClickScroll = false;
+  var clickScrollTimer = null;
+
+  links.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) { return; }
+      e.preventDefault();
+      isClickScroll = true;
+      clearTimeout(clickScrollTimer);
+      links.forEach(function (x) { x.classList.toggle('on', x === a); });
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + target.id);
+      clickScrollTimer = setTimeout(function () { isClickScroll = false; }, 900);
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      if (isClickScroll) { return; }
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) { return; }
+        var idx = sections.indexOf(entry.target);
+        if (idx === -1) { return; }
+        links.forEach(function (x, i) { x.classList.toggle('on', i === idx); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { if (s) { observer.observe(s); } });
+  }
+})();
+
+
+/* Fiche établissement (école) : navigation verticale sur desktop (une
+   seule page, clic sur la nav = défilement direct), accordéon
+   repliable sur mobile (clic sur une partie = ouvre/ferme). Scopé à
+   .p2-ec-nav-layout pour ne pas toucher la fiche formation. Ajouté le
+   19/09/2026. */
+(function () {
+  var layout = document.querySelector('.p2-ec-nav-layout');
+  if (!layout) { return; }
+  var links = Array.prototype.slice.call(layout.querySelectorAll('.p2-ec-navlink'));
+  var sections = links.map(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  });
+  var isClickScroll = false;
+  var clickScrollTimer = null;
+
+  links.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) { return; }
+      e.preventDefault();
+      isClickScroll = true;
+      clearTimeout(clickScrollTimer);
+      links.forEach(function (x) { x.classList.toggle('on', x === a); });
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + target.id);
+      clickScrollTimer = setTimeout(function () { isClickScroll = false; }, 900);
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      if (isClickScroll) { return; }
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) { return; }
+        var idx = sections.indexOf(entry.target);
+        if (idx === -1) { return; }
+        links.forEach(function (x, i) { x.classList.toggle('on', i === idx); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { if (s) { observer.observe(s); } });
+  }
+
+  var heads = layout.querySelectorAll('.p2-ec-sec-head');
+  heads.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var section = btn.closest('.p2-ec-section');
+      if (!section) { return; }
+      var open = section.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   });
 })();

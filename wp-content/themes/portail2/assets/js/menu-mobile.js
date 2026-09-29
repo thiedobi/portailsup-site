@@ -1,4 +1,4 @@
-/* PortailSup — menu mobile : panneau de droite, page en cours, fermeture. */
+/* ChoisirSaFormation — menu mobile : panneau de droite, page en cours, fermeture. */
 (function () {
 	function init() {
 		var burger = document.getElementById('p2Burger');

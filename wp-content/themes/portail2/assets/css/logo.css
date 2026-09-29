@@ -1,0 +1,24 @@
+/* Logo ChoisirSaFormation — en-tête, pied de page, menu mobile.
+   Ajouté le 18/09/2026. Pour revenir en arrière : supprimer ce fichier
+   et sa ligne de chargement dans functions.php. */
+
+.p2-brand{display:inline-flex;align-items:center;line-height:0}
+.p2-logo{display:block;width:auto;height:26px}
+
+/* Pied de page : version blanche, légèrement plus petite */
+.p2-brand-foot{margin:0 0 12px}
+.p2-brand-foot .p2-logo{height:24px}
+
+/* Téléphone : logo réduit pour laisser la place à la loupe et au menu */
+@media (max-width:719px){
+  .p2-logo{height:21px}
+  .p2-brand-foot .p2-logo{height:22px}
+}
+@media (max-width:359px){
+  .p2-logo{height:18px}
+}
+
+/* Écrans intermédiaires : évite que le logo écrase le menu */
+@media (min-width:720px) and (max-width:1023px){
+  .p2-logo{height:23px}
+}

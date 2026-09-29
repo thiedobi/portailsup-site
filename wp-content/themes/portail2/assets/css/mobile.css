@@ -1,5 +1,5 @@
 /*
- * PortailSup — optimisation de l'affichage mobile (écrans ≤ 719 px)
+ * ChoisirSaFormation — optimisation de l'affichage mobile (écrans ≤ 719 px)
  * Ajouté le 11/09/2026. Chargé après portail2.css.
  * Toutes les règles sont limitées aux petits écrans : l'affichage ordinateur ne change pas.
  * Pour annuler : supprimer ce fichier ou retirer son chargement dans functions.php.
@@ -376,4 +376,45 @@
 		margin-left: auto; flex: none; width: 42px; height: 42px; border-radius: 50%; font-size: 0;
 		background: var(--p2-emer) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 18px no-repeat;
 	}
+}
+
+/* ============================================================
+   Fiche établissement (école) sur mobile : la photo de couverture et
+   le bloc nom/logo/partage sont séparés (carte blanche détachée sous
+   la photo) au lieu du bandeau sombre avec texte en surimpression.
+   Ajouté le 19/09/2026.
+   ============================================================ */
+@media (max-width: 719px) {
+
+	.p2-schoolhero {
+		display: block; height: auto; border-radius: 0; overflow: visible; background: none;
+	}
+	.p2-schoolhero > img {
+		position: static; display: block; width: 100%; height: 190px;
+		border-radius: 16px; object-fit: cover;
+	}
+	.p2-schoolhero-shade { display: none; }
+	.p2-schoolhero .p2-plaquette-btn {
+		top: 12px; right: 12px; bottom: auto; left: auto; padding: 8px 14px; font-size: 12px;
+	}
+	.p2-schoolhero-in {
+		display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px;
+		width: auto; margin: -28px 12px 0; padding: 14px 14px 12px;
+		background: #fff; border-radius: 16px; box-shadow: 0 6px 22px rgba(0,0,0,.10);
+	}
+	.p2-schoolhero-logo { width: 56px; height: 56px; box-shadow: 0 3px 10px rgba(0,0,0,.08); }
+	.p2-schoolhero-body { flex: 1; min-width: 0; }
+	.p2-schoolhero-badges { margin-bottom: 6px; color: var(--p2-ink); }
+	.p2-schoolhero-title {
+		color: #0F172A; font-size: 17px; font-weight: 700; text-shadow: none;
+	}
+	.p2-schoolhero-share {
+		flex: none; width: 100%; align-self: auto;
+		margin-top: 10px; padding-top: 10px; border-top: 1px solid #F1F3F2;
+	}
+	.p2-schoolhero-share .p2-share-l { color: var(--p2-gray); }
+	.p2-schoolhero-share .p2-share-a {
+		background: var(--p2-emer-pale); border-color: transparent; color: var(--p2-emer-d);
+	}
+	.p2-schoolhero-share .p2-share-a:hover { background: var(--p2-emer); border-color: var(--p2-emer); color: #fff; }
 }

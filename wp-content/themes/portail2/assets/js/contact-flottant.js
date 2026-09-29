@@ -1,4 +1,4 @@
-/* PortailSup — bouton flottant « Contacter » (fiches formation et école, écrans ≤ 1000 px). */
+/* ChoisirSaFormation — bouton flottant « Contacter » (fiches formation et école, écrans ≤ 1000 px). */
 (function () {
 	function init() {
 		var form = document.querySelector('.p2-ffside > .clarte-ff-form');

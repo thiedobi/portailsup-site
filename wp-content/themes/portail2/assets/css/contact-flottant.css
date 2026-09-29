@@ -1,5 +1,5 @@
 /*
- * PortailSup — bouton flottant « Contacter » sur les fiches formation et école
+ * ChoisirSaFormation — bouton flottant « Contacter » sur les fiches formation et école
  * Écrans ≤ 1000 px : le formulaire quitte le bas de page et s'ouvre dans un panneau
  * qui monte du bas de l'écran. Au-delà, le formulaire reste dans la colonne de droite.
  * Ajouté le 11/09/2026. Pour annuler : retirer la ligne « inc/contact-flottant.php » dans functions.php.

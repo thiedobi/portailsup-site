@@ -1,4 +1,4 @@
-/* PortailSup — suggestions de domaines dans la barre de recherche de l'accueil (11/09/2026).
+/* ChoisirSaFormation — suggestions de domaines dans la barre de recherche de l'accueil (11/09/2026).
    Dès 2 lettres tapées, une liste de domaines apparaît sous la barre (ex. « inf » → Informatique).
    Un clic (ou Entrée) ouvre la page Formations filtrée sur ce domaine. */
 (function () {

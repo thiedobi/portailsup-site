@@ -1,4 +1,4 @@
-/* PortailSup — interactions Clarté (filtres accordéon) */
+/* ChoisirSaFormation — interactions Clarté (filtres accordéon) */
 (function () {
   /* Repli des images (remplace les onerror inline, compatibles CSP) :
      data-fallback = adresse de secours ; data-fallback-remove = retirer l'image. */
@@ -297,7 +297,7 @@
       ['Coût annuel', 'clabel'], ['Accréditations', 'accred']
     ];
     /* Texte de partage WhatsApp : une ligne par formation, avec le lien de la fiche. */
-    var waTxt = 'Comparaison de formations — PortailSup :';
+    var waTxt = 'Comparaison de formations — ChoisirSaFormation :';
     cards.forEach(function (c) {
       var t = c.querySelector('.p2-rc-title');
       waTxt += '\n• ' + (t ? t.textContent.trim() : 'Formation') + ' (' + (c.getAttribute('data-ecole') || '') + ') — ' + (c.getAttribute('data-clabel') || 'coût n.c.') + '\n' + (c.getAttribute('href') || '');
